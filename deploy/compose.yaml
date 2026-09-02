@@ -86,6 +86,7 @@ services:
     read_only: true
     tmpfs:
       - /tmp:size=32m,mode=1777
+      - /etc/nginx/conf.d:size=1m,mode=0777
     cap_drop:
       - ALL
     security_opt:
