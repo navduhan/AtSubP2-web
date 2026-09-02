@@ -27,6 +27,23 @@ The configured SLURM script must accept `input.fasta level model output-director
 
 ## Start
 
+### Rootless Podman (recommended on RHEL-family VMs)
+
+Install the external Compose provider, then run the deployment as the unprivileged VM user without `sudo`:
+
+```bash
+sudo dnf install -y podman-compose
+podman info --format '{{.Host.Security.Rootless}}'
+podman compose --env-file deploy/docker.env \
+  -f deploy/compose.yaml \
+  -f deploy/compose.podman.yaml \
+  up -d --build
+```
+
+The rootless check must print `true`. The Podman overlay uses `keep-id` for the application process and private SELinux relabeling for its bind mounts. It also mounts the dedicated cluster key read-only; do not add `compose.ssh-key.yaml` to the Podman command.
+
+### Docker Engine
+
 ```bash
 docker compose --env-file deploy/docker.env -f deploy/compose.yaml -f deploy/compose.ssh-key.yaml up -d --build
 ```
@@ -36,8 +53,8 @@ The gateway listens only on `127.0.0.1:3210` by default. Configure the VM's publ
 Check the deployment:
 
 ```bash
-docker compose --env-file deploy/docker.env -f deploy/compose.yaml -f deploy/compose.ssh-key.yaml ps
-docker compose --env-file deploy/docker.env -f deploy/compose.yaml -f deploy/compose.ssh-key.yaml logs -f app gateway
+podman compose --env-file deploy/docker.env -f deploy/compose.yaml -f deploy/compose.podman.yaml ps
+podman compose --env-file deploy/docker.env -f deploy/compose.yaml -f deploy/compose.podman.yaml logs -f app gateway
 curl --fail http://127.0.0.1:3210/
 ```
 
