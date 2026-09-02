@@ -29,14 +29,24 @@ type PredictionJobResponse = {
   [key: string]: unknown;
 };
 
+async function readPredictionResponse(response: Response) {
+  const raw = await response.text();
+  try {
+    return JSON.parse(raw) as PredictionJobResponse;
+  } catch {
+    const status = `${response.status} ${response.statusText}`.trim();
+    throw new Error(`The prediction service returned an unexpected response (${status}). Please contact the server administrator.`);
+  }
+}
+
 const wait = (ms: number) => new Promise((resolve) => window.setTimeout(resolve, ms));
 
 async function pollPredictionJob(jobId: string, jobToken: string, onUpdate: (message: string) => void, isCancelled: () => boolean) {
   while (!isCancelled()) {
     const response = await fetch(withBasePath(`/api/predict?jobId=${encodeURIComponent(jobId)}`), {
-      cache: 'no-store', headers: { Authorization: `Bearer ${jobToken}` },
+      cache: 'no-store', headers: { 'X-AtSubP2-Job-Token': jobToken },
     });
-    const job = await response.json() as PredictionJobResponse;
+    const job = await readPredictionResponse(response);
     if (!response.ok) throw new Error(job.error || 'Unable to read prediction status.');
     onUpdate(job.message || `Job status: ${job.status}`);
     if (job.status === 'completed' || job.status === 'failed') return job;
@@ -233,7 +243,7 @@ export default function PredictionPage() {
         }),
       });
 
-      const data = await res.json() as PredictionJobResponse;
+      const data = await readPredictionResponse(res);
       if (!res.ok) {
         throw new Error(data.error || 'Job submission failed');
       }
