@@ -75,8 +75,7 @@ services:
     container_name: atsubp2-gateway
     restart: unless-stopped
     depends_on:
-      app:
-        condition: service_healthy
+      - app
     ports:
       - "${PUBLIC_BIND_ADDRESS:-127.0.0.1}:3210:3210"
     environment:
