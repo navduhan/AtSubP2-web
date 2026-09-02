@@ -48,7 +48,7 @@ The rootless check must print `true`. The Podman overlay uses `keep-id` for the 
 docker compose --env-file deploy/docker.env -f deploy/compose.yaml -f deploy/compose.ssh-key.yaml up -d --build
 ```
 
-The gateway listens only on `127.0.0.1:3210` by default. Configure the VM's public HTTPS reverse proxy to forward the AtSubP-2.0 domain to that address. Do not expose the internal application container.
+The gateway listens only on `127.0.0.1:3210` by default. When the HTTPS reverse proxy is on another host, set `PUBLIC_BIND_ADDRESS` to the VM's private interface address and set `TRUSTED_PROXY_CIDR` to the reverse proxy's exact source address with a `/32` prefix. Restrict TCP port 3210 at the VM firewall to that same source address. Never expose the internal application container.
 
 Check the deployment:
 
