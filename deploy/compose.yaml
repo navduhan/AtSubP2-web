@@ -7,6 +7,7 @@ services:
       dockerfile: Dockerfile
       args:
         NEXT_PUBLIC_TURNSTILE_SITE_KEY: ${TURNSTILE_SITE_KEY:?set TURNSTILE_SITE_KEY}
+        NEXT_PUBLIC_BASE_PATH: ${NEXT_PUBLIC_BASE_PATH:-/AtSubP2}
     image: atsubp2-web:2.0
     container_name: atsubp2-web
     user: "${DOCKER_UID:-1000}:${DOCKER_GID:-1000}"
@@ -16,6 +17,7 @@ services:
     environment:
       PORT: "3210"
       HOSTNAME: "0.0.0.0"
+      NEXT_PUBLIC_BASE_PATH: ${NEXT_PUBLIC_BASE_PATH:-/AtSubP2}
       BIOCLUSTER_HOST: ${BIOCLUSTER_HOST:?set BIOCLUSTER_HOST}
       BIOCLUSTER_PORT: ${BIOCLUSTER_PORT:-22}
       BIOCLUSTER_USER: ${BIOCLUSTER_USER:?set BIOCLUSTER_USER}
@@ -64,7 +66,7 @@ services:
       - egress
     mem_limit: 1g
     healthcheck:
-      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3210/').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3210/AtSubP2').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
       interval: 30s
       timeout: 5s
       retries: 3
@@ -97,7 +99,7 @@ services:
       - frontend
       - egress
     healthcheck:
-      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:3210/"]
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:3210/AtSubP2"]
       interval: 30s
       timeout: 5s
       retries: 3

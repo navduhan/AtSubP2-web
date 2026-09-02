@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { BookOpen, CheckCircle2, ClipboardPaste, Database, ExternalLink, FileUp, Info, X, Loader2, Play, RefreshCw, Upload, Zap, Layers, Mail } from 'lucide-react';
 import TurnstileWidget from '@/components/TurnstileWidget';
+import { withBasePath } from '@/lib/base-path';
 
 const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '';
 
@@ -32,7 +33,7 @@ const wait = (ms: number) => new Promise((resolve) => window.setTimeout(resolve,
 
 async function pollPredictionJob(jobId: string, jobToken: string, onUpdate: (message: string) => void, isCancelled: () => boolean) {
   while (!isCancelled()) {
-    const response = await fetch(`/api/predict?jobId=${encodeURIComponent(jobId)}`, {
+    const response = await fetch(withBasePath(`/api/predict?jobId=${encodeURIComponent(jobId)}`), {
       cache: 'no-store', headers: { Authorization: `Bearer ${jobToken}` },
     });
     const job = await response.json() as PredictionJobResponse;
@@ -119,7 +120,7 @@ export default function PredictionPage() {
   const fetchAccessionsData = async (accString: string, db: 'ncbi' | 'uniprot') => {
     setFetchingAcc(true);
     try {
-      const res = await fetch('/api/accession', {
+      const res = await fetch(withBasePath('/api/accession'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ accessions: accString, db }),
@@ -181,7 +182,7 @@ export default function PredictionPage() {
     if (!seqToRun.trim() && accession.trim()) {
       setFetchingAcc(true);
       try {
-        const res = await fetch('/api/accession', {
+        const res = await fetch(withBasePath('/api/accession'), {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ accessions: accession, db: accType }),
@@ -220,7 +221,7 @@ export default function PredictionPage() {
     setJobStatusText('Submitting the job…');
 
     try {
-      const res = await fetch('/api/predict', {
+      const res = await fetch(withBasePath('/api/predict'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

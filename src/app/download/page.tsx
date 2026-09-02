@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { withBasePath } from '@/lib/base-path';
 import { ArrowRight, CloudDownload, FileInput, Gauge, Layers3, Mail, PackageCheck, ShieldCheck, SquareTerminal } from 'lucide-react';
 
 const installCommand = `# 1. Extract the package
@@ -23,7 +24,7 @@ export default function DownloadPage() {
         <div className="pointer-events-none absolute -right-16 -top-32 h-80 w-80 rounded-full border-[52px] border-white/5" />
         <div className="relative grid gap-8 lg:grid-cols-[1fr_360px] lg:items-end">
           <div><p className="flex items-center gap-2 text-[11px] font-black uppercase tracking-[0.2em] text-[#8ed8c8]"><PackageCheck className="h-4 w-4" /> Standalone command-line package</p><h1 className="mt-3 font-serif text-4xl font-semibold tracking-tight sm:text-5xl">Run AtSubP-2.0 locally</h1><p className="mt-4 max-w-2xl text-sm leading-6 text-slate-300">Download the Arabidopsis protein localization models, Python utilities, TFLite inference engine, and example inputs for reproducible local analysis.</p></div>
-          <a href="/download/AtSubP-2.0.tar.gz" download className="group rounded-2xl bg-[#d9a62e] p-5 text-[#082b3b] transition hover:bg-[#efbd45]"><span className="flex items-center justify-between"><CloudDownload className="h-6 w-6" /><ArrowRight className="h-5 w-5 transition group-hover:translate-x-1" /></span><span className="mt-5 block font-serif text-xl font-semibold">Download package</span><span className="mt-1 block text-xs font-bold">AtSubP-2.0.tar.gz</span></a>
+          <a href={withBasePath('/download/AtSubP-2.0.tar.gz')} download className="group rounded-2xl bg-[#d9a62e] p-5 text-[#082b3b] transition hover:bg-[#efbd45]"><span className="flex items-center justify-between"><CloudDownload className="h-6 w-6" /><ArrowRight className="h-5 w-5 transition group-hover:translate-x-1" /></span><span className="mt-5 block font-serif text-xl font-semibold">Download package</span><span className="mt-1 block text-xs font-bold">AtSubP-2.0.tar.gz</span></a>
         </div>
       </header>
 

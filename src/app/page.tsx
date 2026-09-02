@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { withBasePath } from '@/lib/base-path';
 import {
   ArrowRight,
   ArrowUpRight,
@@ -85,7 +86,7 @@ export default function Home() {
 
         <figure className="overflow-hidden rounded-[1.75rem] border border-[#d7e4e1] bg-[#fbfbf8] p-2 shadow-[0_24px_70px_rgba(8,43,59,0.10)] sm:p-4">
           <Image
-            src="/assets/images/atsubp2_workflow_acd.png"
+            src={withBasePath('/assets/images/atsubp2_workflow_acd.png')}
             alt="AtSubP-2.0 workflow from Arabidopsis protein sequence and tripeptide composition through a convolutional neural network and four-level localization hierarchy"
             width={1608}
             height={978}
