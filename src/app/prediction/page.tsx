@@ -97,7 +97,7 @@ export default function PredictionPage() {
     let activeJob: { jobId: string; jobToken: string };
     try {
       activeJob = JSON.parse(storedJob) as { jobId: string; jobToken: string };
-      if (!activeJob.jobId || !activeJob.jobToken) throw new Error('Invalid stored job.');
+      if (!activeJob.jobId || !activeJob.jobToken || activeJob.jobId.includes('-')) throw new Error('Invalid stored job.');
     } catch {
       localStorage.removeItem('atsubp2_active_job');
       return;
