@@ -4,13 +4,7 @@ services:
     environment:
       BIOCLUSTER_SSH_KEY_PATH: /run/secrets/biocluster_key
     volumes:
-      - ../public/download:/app/public/download:ro,Z
-      - ./data/jobs:/app/data/jobs:Z
       - ${BIOCLUSTER_KEY_FILE:?set BIOCLUSTER_KEY_FILE}:/run/secrets/biocluster_key:ro,Z
-
-  gateway:
-    volumes:
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro,Z
 
 x-podman:
   in_pod: false
