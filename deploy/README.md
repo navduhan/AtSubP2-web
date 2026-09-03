@@ -58,6 +58,16 @@ podman compose --env-file deploy/docker.env -f deploy/compose.yaml -f deploy/com
 curl --fail http://127.0.0.1:3210/
 ```
 
+## Results retention
+
+Private results are retained for 30 days by default (`PREDICTION_JOB_RETENTION_MS=2592000000`). Install the included cleanup command in the rootless Podman user's crontab, replacing `/absolute/path/to/AtSubP2-web` with the cloned repository path:
+
+```cron
+17 3 * * * /absolute/path/to/AtSubP2-web/deploy/prune-expired-jobs.sh
+```
+
+Run `crontab -e` as the same unprivileged user that owns `deploy/data/jobs`; do not install this in root's crontab. The application also prunes expired directories when accepting a new job.
+
 Place `AtSubP-2.0.tar.gz` in `public/download/` only if the public package-download link should be enabled. The archive is mounted at runtime and is never stored in Git or baked into the image.
 
 ## Optional local fallback
