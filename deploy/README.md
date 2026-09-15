@@ -78,6 +78,31 @@ Run `crontab -e` as the same unprivileged user that owns `deploy/data/jobs`; do 
 
 Place `AtSubP-2.0.tar.gz` in `public/download/` only if the public package-download link should be enabled. The archive is mounted at runtime and is never stored in Git or baked into the image.
 
+For a large archive, create the destination on the VM first and transfer it with resumable `rsync` (replace the placeholders with the VM login and checkout path):
+
+```bash
+# On the VM
+mkdir -p /absolute/path/to/AtSubP2-web/public/download
+
+# On the computer that currently has the archive
+rsync --archive --partial --info=progress2 \
+  /path/to/AtSubP-2.0.tar.gz \
+  VM_USER@VM_HOST:/absolute/path/to/AtSubP2-web/public/download/AtSubP-2.0.tar.gz
+
+# Back on the VM
+chmod 0644 /absolute/path/to/AtSubP2-web/public/download/AtSubP-2.0.tar.gz
+cd /absolute/path/to/AtSubP2-web
+./start.sh --start-only
+docker compose --env-file deploy/docker.env -f deploy/compose.yaml \
+  -f deploy/compose.ssh-key.yaml restart gateway
+docker compose --env-file deploy/docker.env -f deploy/compose.yaml \
+  -f deploy/compose.ssh-key.yaml exec -T app \
+  test -r /app/public/download/AtSubP-2.0.tar.gz
+curl --fail --head http://127.0.0.1:3210/AtSubP2/download/AtSubP-2.0.tar.gz
+```
+
+For rootless Podman, replace the `docker compose` commands with `podman compose` and use `-f deploy/compose.podman.yaml` instead of `-f deploy/compose.ssh-key.yaml`.
+
 ## Optional local fallback
 
 Cluster execution is always attempted first. Local inference remains disabled unless `deploy/compose.local-fallback.yaml` is added explicitly and `LOCAL_PREDICTOR_DIR` points to a read-only predictor installation containing `.venv/bin/python`, `AtSubP2.py`, packages, and models.

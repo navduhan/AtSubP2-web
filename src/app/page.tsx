@@ -92,7 +92,7 @@ export default function Home() {
             height={978}
             sizes="(min-width: 1280px) 1216px, calc(100vw - 32px)"
             priority
-            className="h-auto w-full rounded-[1.15rem]"
+            className="mx-auto h-auto w-full rounded-[1.15rem] object-contain lg:max-h-[620px] lg:w-auto"
           />
           <figcaption className="flex flex-col gap-1 px-3 pb-2 pt-4 text-xs leading-5 text-slate-500 sm:flex-row sm:items-center sm:justify-between">
             <span>AtSubP-2.0 four-level protein subcellular localization workflow.</span>
