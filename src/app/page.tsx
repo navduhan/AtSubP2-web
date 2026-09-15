@@ -29,7 +29,7 @@ export default function Home() {
               <span className="h-px w-8 bg-[#218870]" />
               Arabidopsis proteome annotation
             </p>
-            <h1 className="max-w-3xl font-serif text-4xl font-semibold leading-[1.05] tracking-[-0.035em] text-[#082b3b] sm:text-5xl lg:text-6xl">
+            <h1 className="max-w-3xl font-sans text-4xl font-semibold leading-[1.05] tracking-[-0.035em] text-[#082b3b] sm:text-5xl lg:text-6xl">
               Protein localization,
               <span className="block italic text-[#218870]">resolved for Arabidopsis.</span>
             </h1>
@@ -77,7 +77,7 @@ export default function Home() {
         <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#218870]">From sequence to compartment</p>
-            <h2 id="workflow-title" className="mt-2 font-serif text-3xl font-semibold tracking-tight text-[#082b3b] sm:text-4xl">
+            <h2 id="workflow-title" className="mt-2 font-sans text-3xl font-semibold tracking-tight text-[#082b3b] sm:text-4xl">
               The complete prediction workflow
             </h2>
           </div>
@@ -104,7 +104,7 @@ export default function Home() {
       <section className="grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
         <article className="rounded-[1.75rem] border border-slate-200 bg-white p-7 sm:p-9">
           <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#218870]">Why species-specific?</p>
-          <h2 className="mt-3 font-serif text-3xl font-semibold tracking-tight text-[#082b3b]">Built around the Arabidopsis proteome</h2>
+          <h2 className="mt-3 font-sans text-3xl font-semibold tracking-tight text-[#082b3b]">Built around the Arabidopsis proteome</h2>
           <div className="mt-5 grid gap-5 text-[15px] leading-7 text-slate-600 sm:grid-cols-2">
             <p>
               <em className="font-semibold text-slate-800">Arabidopsis thaliana</em> is a foundational model for plant biology. Knowing where its proteins localize helps researchers interpret trafficking, interactions, regulation, and organelle-specific function.
@@ -118,7 +118,7 @@ export default function Home() {
         <aside className="flex flex-col justify-between rounded-[1.75rem] bg-[#082b3b] p-7 text-white sm:p-9">
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#8ed9cb]">Ready to analyze?</p>
-            <h2 className="mt-3 font-serif text-3xl font-semibold">Start with a protein sequence.</h2>
+            <h2 className="mt-3 font-sans text-3xl font-semibold">Start with a protein sequence.</h2>
             <p className="mt-4 text-sm leading-6 text-slate-300">Paste FASTA, upload a file, or provide NCBI and UniProt accessions.</p>
           </div>
           <Link href="/prediction" className="mt-8 inline-flex items-center gap-2 text-sm font-bold text-[#a4eadc] hover:text-white">

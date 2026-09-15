@@ -27,6 +27,14 @@ The configured SLURM script must accept `input.fasta level model output-director
 
 ## Start
 
+The recommended interactive setup from the repository root is:
+
+```bash
+./start.sh
+```
+
+The launcher creates `deploy/docker.env` with mode `0600`, validates the selected Compose configuration, builds the application, starts the services, and checks the site at `/AtSubP2`. Later runs can start existing images, pull Git updates and rebuild, or perform a clean rebuild while preserving job data and downloads. The equivalent direct modes are `--start-only`, `--update`, and `--rebuild`. To create and validate the environment file without starting containers, run `./start.sh --configure-only`.
+
 ### Rootless Podman (recommended on RHEL-family VMs)
 
 Install the external Compose provider, then run the deployment as the unprivileged VM user without `sudo`:
@@ -55,7 +63,7 @@ Check the deployment:
 ```bash
 podman compose --env-file deploy/docker.env -f deploy/compose.yaml -f deploy/compose.podman.yaml ps
 podman compose --env-file deploy/docker.env -f deploy/compose.yaml -f deploy/compose.podman.yaml logs -f app gateway
-curl --fail http://127.0.0.1:3210/
+curl --fail http://127.0.0.1:3210/AtSubP2
 ```
 
 ## Results retention

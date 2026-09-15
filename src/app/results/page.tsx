@@ -125,7 +125,7 @@ export default function ResultsPage() {
     if (content) saveTextFile(content, 'AtSubP2_all_levels.txt');
   };
 
-  if (!loaded) return <div className="container mx-auto max-w-3xl py-16" aria-live="polite"><div className="rounded-[2rem] border border-[#d4e5e0] bg-[#f7f9f8] px-6 py-16 text-center"><Loader2 className="mx-auto h-7 w-7 animate-spin text-[#218870]" /><h1 className="mt-5 font-serif text-2xl font-semibold text-[#082b3b]">Loading prediction results</h1><p className="mt-2 text-sm text-slate-600">{loadMessage}</p></div></div>;
+  if (!loaded) return <div className="container mx-auto max-w-3xl py-16" aria-live="polite"><div className="rounded-[2rem] border border-[#d4e5e0] bg-[#f7f9f8] px-6 py-16 text-center"><Loader2 className="mx-auto h-7 w-7 animate-spin text-[#218870]" /><h1 className="mt-5 font-sans text-2xl font-semibold text-[#082b3b]">Loading prediction results</h1><p className="mt-2 text-sm text-slate-600">{loadMessage}</p></div></div>;
 
   if (!data || resultFiles.length === 0) {
     return (
@@ -134,7 +134,7 @@ export default function ResultsPage() {
           <div className="pointer-events-none absolute -right-16 -top-24 h-64 w-64 rounded-full border-[38px] border-[#dcece8]" />
           <span className="relative mx-auto grid h-14 w-14 place-items-center rounded-full bg-white text-[#218870] shadow-sm"><FlaskConical className="h-6 w-6" /></span>
           <p className="relative mt-6 text-[11px] font-black uppercase tracking-[0.2em] text-[#218870]">Results workspace</p>
-          <h1 className="relative mt-2 font-serif text-4xl font-semibold text-[#082b3b]">No prediction results yet</h1>
+          <h1 className="relative mt-2 font-sans text-4xl font-semibold text-[#082b3b]">No prediction results yet</h1>
           <p className="relative mx-auto mt-4 max-w-xl text-sm leading-6 text-slate-600">{loadError || 'Submit Arabidopsis protein sequences on the Prediction page. Completed results remain available through their private link for 30 days.'}</p>
           <Link href="/prediction" className="relative mt-7 inline-flex items-center gap-2 rounded-full bg-[#218870] px-6 py-3 text-sm font-bold text-white shadow-[0_10px_25px_rgba(33,136,112,0.2)]"><FlaskConical className="h-4 w-4" /> Start a prediction</Link>
         </section>
@@ -151,7 +151,7 @@ export default function ResultsPage() {
         <div className="relative flex flex-col gap-7 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <div className="flex items-center gap-2 text-[11px] font-black uppercase tracking-[0.2em] text-[#8ed8c8]"><CheckCircle2 className="h-4 w-4" /> Analysis complete</div>
-            <h1 className="mt-3 font-serif text-4xl font-semibold tracking-tight sm:text-5xl">AtSubP2 results</h1>
+            <h1 className="mt-3 font-sans text-4xl font-semibold tracking-tight sm:text-5xl">AtSubP2 results</h1>
             <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-300">Review each requested prediction level, inspect the tabular output, or export the complete analysis.</p>
           </div>
           <div className="flex flex-wrap gap-2">
@@ -162,8 +162,8 @@ export default function ResultsPage() {
       </header>
 
       <section className="grid gap-3 sm:grid-cols-3" aria-label="Run summary">
-        <div className="rounded-2xl border border-slate-200 bg-white p-5"><p className="text-[10px] font-black uppercase tracking-[0.16em] text-slate-400">Sequences</p><p className="mt-2 font-serif text-3xl font-semibold text-[#082b3b]">{totalRows}</p><p className="mt-1 text-xs text-slate-500">Protein records analyzed</p></div>
-        <div className="rounded-2xl border border-slate-200 bg-white p-5"><p className="text-[10px] font-black uppercase tracking-[0.16em] text-slate-400">Outputs</p><p className="mt-2 font-serif text-3xl font-semibold text-[#082b3b]">{resultFiles.length}</p><p className="mt-1 text-xs text-slate-500">Prediction levels available</p></div>
+        <div className="rounded-2xl border border-slate-200 bg-white p-5"><p className="text-[10px] font-black uppercase tracking-[0.16em] text-slate-400">Sequences</p><p className="mt-2 font-sans text-3xl font-semibold text-[#082b3b]">{totalRows}</p><p className="mt-1 text-xs text-slate-500">Protein records analyzed</p></div>
+        <div className="rounded-2xl border border-slate-200 bg-white p-5"><p className="text-[10px] font-black uppercase tracking-[0.16em] text-slate-400">Outputs</p><p className="mt-2 font-sans text-3xl font-semibold text-[#082b3b]">{resultFiles.length}</p><p className="mt-1 text-xs text-slate-500">Prediction levels available</p></div>
         <div className="min-w-0 rounded-2xl border border-[#c8e2dc] bg-[#eef8f5] p-5"><p className="text-[10px] font-black uppercase tracking-[0.16em] text-[#218870]">Results ID</p><p className="mt-2 truncate font-mono text-sm font-bold text-[#082b3b]" title={data.jobId}>{data.jobId || 'Browser result'}</p><p className="mt-2 text-xs text-slate-600">{expiryDate ? `Available until ${expiryDate.toLocaleDateString()}` : 'Save the private URL below'}</p></div>
       </section>
 
@@ -171,7 +171,7 @@ export default function ResultsPage() {
 
       <div className="space-y-4">
         <nav className="rounded-[1.5rem] border border-slate-200 bg-[#f7f9f8] p-3" aria-label="Prediction levels">
-          <div className="flex flex-col gap-3 px-2 pb-2 pt-1 sm:flex-row sm:items-end sm:justify-between"><div><p className="text-[10px] font-black uppercase tracking-[0.18em] text-[#218870]">Output navigator</p><h2 className="mt-1 font-serif text-xl font-semibold text-[#082b3b]">Prediction levels</h2></div><p className="text-[11px] text-slate-500">Choose a level to update the table below.</p></div>
+          <div className="flex flex-col gap-3 px-2 pb-2 pt-1 sm:flex-row sm:items-end sm:justify-between"><div><p className="text-[10px] font-black uppercase tracking-[0.18em] text-[#218870]">Output navigator</p><h2 className="mt-1 font-sans text-xl font-semibold text-[#082b3b]">Prediction levels</h2></div><p className="text-[11px] text-slate-500">Choose a level to update the table below.</p></div>
           <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-4">
             {resultFiles.map((fileName) => {
               const meta = levelMeta(fileName);
@@ -183,7 +183,7 @@ export default function ResultsPage() {
 
         <section className="min-w-0 overflow-hidden rounded-[1.5rem] border border-slate-200 bg-white shadow-[0_18px_50px_rgba(8,43,59,0.06)]">
           <div className="flex flex-col gap-4 border-b border-slate-200 px-5 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-6">
-            <div><p className="text-[10px] font-black uppercase tracking-[0.18em] text-[#218870]">{activeMeta.level}</p><h2 className="mt-1 font-serif text-2xl font-semibold text-[#082b3b]">{activeMeta.title}</h2><p className="mt-1 text-xs text-slate-500">{activeRows.length} result row{activeRows.length === 1 ? '' : 's'}</p></div>
+            <div><p className="text-[10px] font-black uppercase tracking-[0.18em] text-[#218870]">{activeMeta.level}</p><h2 className="mt-1 font-sans text-2xl font-semibold text-[#082b3b]">{activeMeta.title}</h2><p className="mt-1 text-xs text-slate-500">{activeRows.length} result row{activeRows.length === 1 ? '' : 's'}</p></div>
             <button type="button" onClick={downloadActive} disabled={!activeRows.length} className="inline-flex items-center justify-center gap-2 rounded-full border border-[#218870] px-4 py-2.5 text-xs font-bold text-[#218870] transition hover:bg-[#eef8f5] disabled:opacity-40"><Download className="h-4 w-4" /> Download this level</button>
           </div>
           <div className="flex items-center justify-end gap-1.5 border-b border-slate-100 bg-slate-50 px-5 py-2 text-[10px] font-bold uppercase tracking-[0.1em] text-slate-500"><ArrowLeftRight className="h-3.5 w-3.5" /> Scroll horizontally to view all columns</div>

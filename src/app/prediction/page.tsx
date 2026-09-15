@@ -8,13 +8,40 @@ import { buildJobBookmark } from '@/lib/job-bookmark';
 
 const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '';
 
-const DEMO_FASTA = `>AT1G01010.1 | ANAC001 | NAC domain-containing protein 1
-MALQVESTFDLSCSCSGGSGGSGNDSSSLSFTPSCSSSSSAASSSSSSFSSSSSSSSSS
-SPSFLSDFLSSDFLSSFLSDFLSSLSSFSSFSSSSSFLSFLSDFLS
->AT1G01020.1 | ARV1 | Arv1 family protein
-MAPDPEASSRRRRSRSKSPSSRSPRRSSSRSPRRSRSRSPRRSRSRSPRRSRSRSPRRSR
->AT1G01030.1 | At1g01030 | Ribosomal protein S12 family
-MANPNSRSKSPSSRSPRRSSSRSPRRSRSRSPRRSRSRSPRRSRSRSPRRSRSRSPRRSR`;
+const DEMO_ACCESSIONS = 'Q9SKB2\nQ8GZ99\nQ8LD43';
+
+const DEMO_FASTA = `>sp|Q9SKB2|SBIR1_ARATH Leucine-rich repeat receptor-like serine/threonine/tyrosine-protein kinase SOBIR1 OS=Arabidopsis thaliana OX=3702 GN=SOBIR1 PE=1 SV=1
+MAVPTGSANLFLRPLILAVLSFLLLSSFVSSVEWLDIDSSDLKALQVIETELGVNSQRSS
+ASDVNPCGRRGVFCERRHSATTGEYVLRVTRLVYRSRSLTGTISPVIGMLSELKELTLSN
+NQLVNAVPVDILSCKQLEVLDLRKNRFSGQIPGNFSSLSRLRILDLSSNKLSGNLNFLKN
+LRNLENLSVANNLFSGKIPEQIVSFHNLRFFDFSGNRYLEGPAPVMSSIKLQTSPHQTRH
+ILAETPTSSPTNKPNNSTTSKAPKGAPKPGKLKKKKKKSKKKKVAAWILGFVVGAIGGTI
+SGFVFSVLFKLIIQAIRGSEKPPGPSIFSPLIKKAEDLAFLENEEALASLEIIGRGGCGE
+VFKAELPGSNGKIIAVKKVIQPPKDADELTDEDSKFLNKKMRQIRSEINTVGHIRHRNLL
+PLLAHVSRPECHYLVYEYMEKGSLQDILTDVQAGNQELMWPARHKIALGIAAGLEYLHMD
+HNPRIIHRDLKPANVLLDDDMEARISDFGLAKAMPDAVTHITTSHVAGTVGYIAPEFYQT
+HKFTDKCDIYSFGVILGILVIGKLPSDEFFQHTDEMSLIKWMRNIITSENPSLAIDPKLM
+DQGFDEQMLLVLKIACYCTLDDPKQRPNSKDVRTMLSQIKH
+>sp|Q8GZ99|HPCA1_ARATH Leucine-rich repeat receptor protein kinase HPCA1 OS=Arabidopsis thaliana OX=3702 GN=HPCA1 PE=1 SV=1
+MSSRTGASLLLILFFFQICSVSALTNGLDASALNALKSEWTTPPDGWEGSDPCGTNWVGI
+TCQNDRVVSISLGNLDLEGKLPADISFLSELRILDLSYNPKLSGPLPPNIGNLGKLRNLI
+LVGCSFSGQIPESIGTLKELIYLSLNLNKFSGTIPPSIGLLSKLYWFDIADNQIEGELPV
+SNGTSAPGLDMLLQTKHFHFGKNKLSGNIPKELFSSNMSLIHVLFDGNQFTGEIPETLSL
+VKTLTVLRLDRNKLIGDIPSYLNNLTNLNELYLANNRFTGTLPNLTSLTSLYTLDVSNNT
+LDFSPIPSWISSLPSLSTLRMEGIQLNGPIPISFFSPPQLQTVILKRNSIVESLDFGTDV
+SSQLEFVDLQYNEITDYKPSANKVLQVILANNPVCLEAGNGPSYCSAIQHNTSFSTLPTN
+CSPCEPGMEASPTCRCAYPFMGTLYFRSPSFSGLFNSTNFSILQKAIADFFKKFNYPVDS
+VGVRNIRENPTDHQLLIDLLVFPLGRESFNQTGMSLVGFAFSNQTYKPPPIFGPYIFKAD
+LYKQFSDVEVSSKSSNKSILIGAVVGVVVLLLLLTIAGIYALRQKKRAERATGQNNPFAK
+WDTSKSSIDAPQLMGAKAFTFEELKKCTDNFSEANDVGGGGYGKVYRGILPNGQLIAIKR
+AQQGSLQGGLEFKTEIELLSRVHHKNVVRLLGFCFDRNEQMLVYEYISNGSLKDSLSGKS
+GIRLDWTRRLKIALGSGKGLAYLHELADPPIIHRDIKSNNILLDENLTAKVADFGLSKLV
+GDPEKTHVTTQVKGTMGYLDPEYYMTNQLTEKSDVYGFGVVLLELLTGRSPIERGKYVVR
+EVKTKMNKSRSLYDLQELLDTTIIASSGNLKGFEKYVDLALRCVEEEGVNRPSMGEVVKE
+IENIMQLAGLNPNSDSATSSRTYEDAIKGSGDPYGSESFQYSGNFPASKLEPQ
+>sp|Q8LD43|AGP40_ARATH Arabinogalactan protein 40 OS=Arabidopsis thaliana OX=3702 GN=AGP40 PE=1 SV=1
+MEMKNIFVALFISAVLVSSVSAATMESPAPSPGASSASTVAFPVVGSIVAASLSAFLALL
+LQ`;
 
 const getErrorMessage = (error: unknown) =>
   error instanceof Error ? error.message : 'An unexpected error occurred.';
@@ -160,7 +187,7 @@ export default function PredictionPage() {
   const loadDemoAccession = () => {
     setInputMode('accession');
     setAccType('uniprot');
-    setAccession('Q0WV96');
+    setAccession(DEMO_ACCESSIONS);
     setTextareaSeq('');
   };
 
@@ -298,7 +325,7 @@ export default function PredictionPage() {
         <div className="pointer-events-none absolute -right-16 -top-28 h-72 w-72 rounded-full border-[42px] border-[#d8ebe8]/70" />
         <div className="relative">
           <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#218870]">AtSubP-2.0 prediction server</p>
-          <h1 className="mt-2 font-serif text-3xl font-semibold tracking-tight text-[#082b3b] sm:text-4xl">
+          <h1 className="mt-2 font-sans text-3xl font-semibold tracking-tight text-[#082b3b] sm:text-4xl">
             Configure an Arabidopsis localization run
           </h1>
           <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-600 sm:text-base">
@@ -313,7 +340,7 @@ export default function PredictionPage() {
           <div className="space-y-6 rounded-[1.5rem] border border-[#d7e4e1] bg-white p-5 shadow-[0_16px_45px_rgba(8,43,59,0.06)] sm:p-7 lg:col-span-7">
             <div>
               <p className="text-[10px] font-black uppercase tracking-[0.18em] text-[#218870]">Step 1</p>
-              <h2 className="mt-1 font-serif text-2xl font-semibold text-[#082b3b]">Provide protein input</h2>
+              <h2 className="mt-1 font-sans text-2xl font-semibold text-[#082b3b]">Provide protein input</h2>
               <p className="mt-2 text-sm leading-6 text-slate-500">Choose one input route. Your loaded sequence remains editable before submission.</p>
             </div>
 
@@ -349,7 +376,7 @@ export default function PredictionPage() {
                     <p className="mt-1 text-xs text-slate-500">Separate multiple IDs with commas, spaces, or new lines.</p>
                   </div>
                   <div className="flex flex-col items-end gap-2 sm:flex-row sm:items-center">
-                    <button type="button" onClick={loadDemoAccession} className="text-[11px] font-bold text-[#218870] hover:underline">Load demo accession</button>
+                    <button type="button" onClick={loadDemoAccession} className="text-[11px] font-bold text-[#218870] hover:underline">Load 3 Arabidopsis accessions</button>
                     <div className="flex rounded-lg border border-slate-200 bg-slate-50 p-0.5">
                     {(['ncbi', 'uniprot'] as const).map((db) => (
                       <button
@@ -369,7 +396,7 @@ export default function PredictionPage() {
                   rows={4}
                   value={accession}
                   onChange={(e) => { setAccession(e.target.value); setTextareaSeq(''); }}
-                  placeholder="AT1G01010.1&#10;AT1G01020.1"
+                  placeholder="Q9SKB2&#10;Q8GZ99&#10;Q8LD43"
                   className="form-input-atsubp w-full resize-y p-3 font-mono text-xs leading-6"
                 />
                 <div className="flex flex-col gap-3 rounded-xl border border-[#d8e7e3] bg-[#f6faf9] p-4 sm:flex-row sm:items-center sm:justify-between">
@@ -437,7 +464,7 @@ export default function PredictionPage() {
               <div className="flex items-start justify-between border-b border-slate-200 pb-4">
                 <div>
                   <p className="text-[10px] font-black uppercase tracking-[0.18em] text-[#7454a6]">Step 2</p>
-                  <h2 className="mt-1 font-serif text-2xl font-semibold text-[#082b3b]">Prediction options</h2>
+                  <h2 className="mt-1 font-sans text-2xl font-semibold text-[#082b3b]">Prediction options</h2>
                 </div>
               </div>
 
