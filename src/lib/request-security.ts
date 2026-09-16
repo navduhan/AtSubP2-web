@@ -19,7 +19,7 @@ export const REQUEST_LIMITS = {
   bodyBytes: positiveInteger(process.env.MAX_REQUEST_BODY_BYTES, 1_048_576),
   accessionCount: positiveInteger(process.env.MAX_ACCESSION_COUNT, 50),
   accessionLength: positiveInteger(process.env.MAX_ACCESSION_LENGTH, 64),
-  sequenceCount: positiveInteger(process.env.PREDICTION_MAX_SEQUENCES, 500),
+  sequenceCount: positiveInteger(process.env.PREDICTION_MAX_SEQUENCES, 10_000),
   totalResidues: positiveInteger(process.env.PREDICTION_MAX_RESIDUES, 1_000_000),
   sequenceLength: positiveInteger(process.env.PREDICTION_MAX_SEQUENCE_LENGTH, 20_000),
 };
